@@ -6,14 +6,14 @@ candidate.
 
 `install()` installs only the module lifecycle registry. `provision(context)`
 creates one explicitly requested per-principal MFS database. Both have separate
-read-only validation operations, and `capabilityAvailable(context)` reports
+read-only validation operations, and `capability_available(context)` reports
 whether the selected context is genuinely ready.
 
-The provisioning database adapter may declare `runtimeUser`; provisioning then
+The provisioning database adapter may declare `runtime_user`; provisioning then
 grants that configured account only the DML and routine execution privileges
 needed on the new context database. No account name is hardcoded in the module.
 
-The required context is `{ organisationId, principalId }`. The principal must
+The required context is `{ organisation_id, principal_id }`. The principal must
 already exist in that organisation. The module never provisions platform
 identities and never enumerates nobody, guest, system or all Drumates.
 
