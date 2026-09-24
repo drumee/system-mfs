@@ -6,7 +6,7 @@ candidate.
 
 `install()` installs only the module lifecycle registry. `provision(context)`
 creates one explicitly requested per-principal MFS database. Both have separate
-read-only validation operations, and `capability_available(context)` reports
+read-only validation operations, and `capabilityAvailable(context)` reports
 whether the selected context is genuinely ready.
 
 The provisioning database adapter may declare `runtime_user`; provisioning then
