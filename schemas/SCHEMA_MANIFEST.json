@@ -1,0 +1,21 @@
+{
+  "manifestVersion": 1,
+  "name": "system-mfs",
+  "phase": "4.6B",
+  "owner": "@drumee/system-mfs-transitional",
+  "packageVersion": "0.0.0-phase4.6b",
+  "schemaVersion": "phase4.6b-system-mfs-1",
+  "install": [
+    { "order": 10, "path": "schemas/yellow-page/001-capability-state.sql", "identity": "system-mfs-capability-state-v1", "purpose": "authoritative installation and per-context provisioning state" }
+  ],
+  "provision": [
+    { "order": 10, "path": "schemas/context/001-mfs-core.sql", "identity": "system-mfs-context-core-v1", "purpose": "per-principal media namespace, root permission and folder operations" }
+  ],
+  "objects": {
+    "yellowPageTables": ["system_mfs_installation", "system_mfs_provisioning"],
+    "contextTables": ["media", "permission"],
+    "contextFunctions": ["mfs_clean_path"],
+    "contextProcedures": ["mfs_node_attr", "mfs_make_dir", "mfs_init_folders", "mfs_show_node_by"]
+  },
+  "excluded": ["Hub", "Team", "Finder", "DMZ", "mfs_changelog", "mfs_ack", "trash", "physical storage"]
+}

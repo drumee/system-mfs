@@ -1,0 +1,9 @@
+{
+  "name": "@drumee/system-mfs-transitional",
+  "version": "0.0.0-phase4.6b",
+  "private": true,
+  "description": "Private transitional Phase 4.6B system MFS module; not a public package or final repository boundary.",
+  "main": "lib/index.js",
+  "type": "commonjs",
+  "scripts": { "test": "node --test test/**/*.test.js" }
+}
