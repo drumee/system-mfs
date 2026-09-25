@@ -61,6 +61,12 @@ never from `entity.db_name`, `entity.home_dir`, or `entity.home_id`.
 
 ## Release status
 
-Version `0.1.0-alpha.1` is the first standalone extraction candidate. The
-package is release-ready for the npm `next` tag but R2 does not authorize
-publication.
+Version `0.1.0-alpha.1` was published to npm on 2026-09-25 at
+06:56:33 UTC from standalone commit
+`cd87db7085bc8dd40614af7fa37cdd1a76ffc5a0`. The `next` tag resolves to this
+version. npm also assigned its mandatory `latest` metadata tag because this is
+the package's first published version.
+
+The published artifact has SHA-1
+`8c107a79dfebcf22dc03fd20c778321fa398a112` and integrity
+`sha512-5mwDVkeqMG773h99b+9xPHe7S+zFTAFcK+NWKaruBZpPWpowi+kSpq0nplV0uMfO5BNYXkX+GojG1pZyoPsojw==`.
