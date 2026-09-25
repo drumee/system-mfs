@@ -2,8 +2,8 @@
   "manifestVersion": 1,
   "name": "system-mfs",
   "phase": "4.6B",
-  "owner": "@drumee/system-mfs-transitional",
-  "packageVersion": "0.0.0-phase4.6b",
+  "owner": "@drumee/system-mfs",
+  "packageVersion": "0.1.0-alpha.1",
   "schemaVersion": "phase4.6b-system-mfs-1",
   "install": [
     { "order": 10, "path": "schemas/yellow-page/001-capability-state.sql", "identity": "system-mfs-capability-state-v1", "purpose": "authoritative installation and per-context provisioning state" }

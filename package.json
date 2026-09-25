@@ -1,9 +1,34 @@
 {
-  "name": "@drumee/system-mfs-transitional",
-  "version": "0.0.0-phase4.6b",
-  "private": true,
-  "description": "Private transitional Phase 4.6B system MFS module; not a public package or final repository boundary.",
+  "name": "@drumee/system-mfs",
+  "version": "0.1.0-alpha.1",
+  "private": false,
+  "description": "Standalone Drumee MFS system module extracted from the validated Phase 4.6B boundary.",
+  "license": "AGPL-3.0-only",
+  "repository": {
+    "type": "git",
+    "url": "git+https://github.com/drumee/system-mfs.git"
+  },
+  "publishConfig": {
+    "access": "public",
+    "tag": "next",
+    "registry": "https://registry.npmjs.org/"
+  },
   "main": "lib/index.js",
+  "exports": {
+    ".": "./lib/index.js",
+    "./package.json": "./package.json"
+  },
+  "files": [
+    "lib/",
+    "schemas/",
+    "PROVENANCE.md",
+    "README.md"
+  ],
   "type": "commonjs",
-  "scripts": { "test": "node --test test/**/*.test.js" }
+  "engines": {
+    "node": ">=18"
+  },
+  "scripts": {
+    "test": "node --test test/artifact.test.js test/mariadb.test.js test/system-mfs.test.js"
+  }
 }

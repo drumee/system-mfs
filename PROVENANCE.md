@@ -1,5 +1,11 @@
 # Phase 4.6B system-mfs provenance
 
+The standalone extraction source is
+`drumee/transient:target/modules/system-mfs/` at commit
+`078e71378a52acd06478d9df556a7cd5b4d6a223`. R2 changes package ownership and
+standalone validation only; the validated Phase 4.6B runtime and SQL semantics
+remain unchanged.
+
 Pinned sources are `drumee/schemas` at
 `cb838e255600a4ec3797dc7ac13659ad9d187421` and `drumee/setup-schemas` at
 `1582eb557ce092dd2cc5fa6f9d533d64911f4dce`.
