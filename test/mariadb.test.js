@@ -81,6 +81,11 @@ test("resolved hub/drumate shards execute the procedure-backed MFS closure", { t
   assert.equal(await store.effectivePermission(other_uid, { hub_id, nid: docs.nid }), 1, "explicit node wildcard wins before inherited parent");
   await database.query("DELETE FROM shard_hub_a.permission WHERE resource_id=? AND entity_id='*'", docs.nid);
   assert.equal(await store.effectivePermission(other_uid, { hub_id, nid: docs.nid }), 4, "parent permission is inherited");
+  assert.equal(await store.effectivePermission(user_id, { hub_id, nid: docs.nid }), 63, "account-wide shard permission applies");
+  const nested = await filesystem.makeDirectory({ destination: { hub_id, nid: docs.nid }, name: "Nested" });
+  await database.query("INSERT INTO shard_hub_a.permission (resource_id,entity_id,message,expiry_time,ctime,utime,permission,assign_via) VALUES (?,?,NULL,0,0,0,0,'no_traversal')", docs.nid, other_uid);
+  assert.equal(await store.effectivePermission(other_uid, { hub_id, nid: nested.nid }), 0, "no_traversal stops permission inheritance");
+  await database.query("DELETE FROM shard_hub_a.permission WHERE resource_id=? AND entity_id=?", docs.nid, other_uid);
   assert.equal(await store.effectivePermission("ffffffffffffffff", { hub_id, nid: docs.nid }), 0, "nobody normalizes to wildcard and defaults to zero");
   await database.query("INSERT INTO shard_hub_a.permission (resource_id,entity_id,message,expiry_time,ctime,utime,permission,assign_via) VALUES (?,?,NULL,0,0,0,1,'share')", docs.nid, "*");
   assert.equal(await store.effectivePermission("nobody", { hub_id, nid: docs.nid }), 1);
