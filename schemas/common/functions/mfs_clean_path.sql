@@ -1,0 +1,8 @@
+DELIMITER $
+DROP FUNCTION IF EXISTS `mfs_clean_path`$
+CREATE FUNCTION `mfs_clean_path`(_path TEXT)
+RETURNS TEXT DETERMINISTIC
+BEGIN
+  RETURN IF(_path='/', '/', REGEXP_REPLACE(CONCAT('/', TRIM(BOTH '/' FROM _path)), '/+', '/'));
+END$
+DELIMITER ;

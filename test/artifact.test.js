@@ -45,9 +45,13 @@ test("packed system-mfs is standalone, confined and dependency-complete", { time
   for (const expected of [
     "package/lib/index.js",
     "package/lib/store.js",
+    "package/lib/projection.js",
     "package/schemas/SCHEMA_MANIFEST.json",
-    "package/schemas/yellow-page/001-capability-state.sql",
-    "package/schemas/context/001-mfs-core.sql",
+    "package/schemas/yellow-page/tables/system_mfs_installation.sql",
+    "package/schemas/yellow-page/tables/system_mfs_provisioning.sql",
+    "package/schemas/common/tables/media.sql",
+    "package/schemas/common/functions/user_permission.sql",
+    "package/schemas/common/procedures/mfs_create_node.sql",
     "package/README.md",
     "package/PROVENANCE.md"
   ]) assert.ok(entries.includes(expected), `artifact omits ${expected}`);
@@ -92,7 +96,7 @@ test("packed system-mfs is standalone, confined and dependency-complete", { time
   const smoke = `
     const assert = require("assert/strict");
     const api = require("@drumee/system-mfs");
-    for (const name of ["MfsError", "MfsNamespace", "SqlMfsStore", "install", "provision", "validateInstallation", "validateProvisioning", "capabilityAvailable"]) {
+    for (const name of ["LocalContentStore", "MfsError", "MfsFilesystem", "MfsNamespace", "SqlMfsStore", "install", "provision", "validateInstallation", "validateProvisioning", "capabilityAvailable"]) {
       assert.equal(typeof api[name], "function", name);
     }
   `;

@@ -29,6 +29,6 @@
     "node": ">=18"
   },
   "scripts": {
-    "test": "node --test test/artifact.test.js test/mariadb.test.js test/system-mfs.test.js"
+    "test": "node --test test/artifact.test.js test/filesystem.test.js test/mariadb.test.js test/sql-granularity.test.js test/system-mfs.test.js"
   }
 }

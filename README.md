@@ -1,72 +1,68 @@
 # @drumee/system-mfs
 
-This standalone CommonJS package owns the minimal Drumee MFS folder namespace
-validated in Phase 4.6B. It is a system/kernel module, not intrinsic runtime,
-Finder, a collaboration suite or a platform identity provisioner.
+This standalone CommonJS package owns the generic Drumee MFS capability. It is
+a system/kernel module, not intrinsic server runtime, Finder, Team policy, or a
+platform identity provisioner.
 
-`install()` installs only the module lifecycle registry. `provision(context)`
-creates one explicitly requested per-principal MFS database. Both have separate
-read-only validation operations, and `capabilityAvailable(context)` reports
-whether the selected context is genuinely ready.
+`install()` installs module lifecycle state in Yellow Pages. `provision()`
+installs and validates MFS SQL in an existing Yellow Pages entity shard. The
+public shard identity is always `{ hub_id, nid }`; physical `db_name`,
+`home_dir`, database hosts, filesystem hosts, and content references remain
+backend-internal.
 
-The provisioning database adapter may declare `runtime_user`; provisioning then
-grants that configured account only the DML and routine execution privileges
-needed on the new context database. No account name is hardcoded in the module.
+Provisioning accepts `{ hub_id }` or a trusted `{ host }`, resolves the entity
+descriptor, and supports `hub` and `drumate` shards. It never creates an
+`mfs_<principal_id>` database. Common SQL is shared by both shard classes;
+class overlays are explicit and currently empty.
 
-The required context is `{ organisation_id, principal_id }`. The principal must
-already exist in that organisation. The module never provisions platform
-identities and never enumerates nobody, guest, system or all Drumates.
-
-Provisioning retains the historical `media` hierarchy, root owner permission,
-`mfs_make_dir`, `mfs_init_folders`, node resolution and child listing. It does
-not include Hub, Team, Finder, DMZ, trash, notification acknowledgement,
-changelog decoration or physical file storage.
-
-The module-owned `system_mfs_provisioning` table is authoritative. Phase 4.6A
-`entity.db_name`, `entity.home_dir` and `entity.home_id` values remain logical
-identity placeholders and are neither changed nor treated as MFS evidence.
-
-## Runtime and SQL contracts
-
-The package has no runtime npm dependencies. Callers provide a parameterized
-database adapter with `await_query` or `query`; provisioning additionally
-requires `executeScript`. An optional `runtime_user` receives only context
-database DML and routine execution grants.
-
-The Yellow Page database must already provide `uniqueId()`, `entity`,
-`drumate`, and `organisation`. Platform bootstrap owns those contracts and the
-principal identities. This package owns only:
+Every SQL object has its own source file and its own deterministic manifest
+entry. Shard-local tree operations are procedure-driven. The package owns:
 
 ```text
-Yellow Page:
+Yellow Pages lifecycle tables:
     system_mfs_installation
     system_mfs_provisioning
 
-per-context database:
+common shard tables:
     media
     permission
-    mfs_clean_path
+
+MFS permission functions:
+    parent_permission
+    user_permission
+    user_expiry
+
+MFS tree procedures:
+    mfs_create_node
     mfs_node_attr
     mfs_make_dir
     mfs_init_folders
     mfs_show_node_by
+    mfs_list_children
+    mfs_rename
+    mfs_hard_remove
+    mfs_move_nodes
+    mfs_enumerate_tree
 ```
 
-## Lifecycle states
+Service-required permissions and the final GRANTED/DENIED decision do not live
+here. Server ACL supplies a trusted Session uid and calls the MFS-specific
+`user_permission()` primitive. `MfsFilesystem` runs only after that service ACL
+grant and retains structural and transactional filesystem checks.
 
-`not-installed`, `installed`, `provisioning`, `provisioned`, `partial`,
-`conflicting`, and `failed` remain explicit states. Capability availability is
-derived from module-owned lifecycle state and validated namespace objects,
-never from `entity.db_name`, `entity.home_dir`, or `entity.home_id`.
+`LocalContentStore` is the optional canonical-content adapter. `commitFile()`
+receives only an opaque, complete staged artifact and adopts it into canonical
+storage. HTTP parsing, upload sessions, temporary chunks, progress, archives,
+WebSocket routing, Finder, trash, changelog, search, and quota policy remain
+outside this package.
+
+The package has no runtime npm dependencies. Callers provide a parameterized
+database adapter with `await_query` or `query`; provisioning additionally
+requires `executeScript`. Yellow Pages must provide `uniqueId()`, `entity`, and
+`vhost` plus the existing assigned shard databases.
 
 ## Release status
 
-Version `0.1.0-alpha.1` was published to npm on 2026-09-25 at
-06:56:33 UTC from standalone commit
-`cd87db7085bc8dd40614af7fa37cdd1a76ffc5a0`. The `next` tag resolves to this
-version. npm also assigned its mandatory `latest` metadata tag because this is
-the package's first published version.
-
-The published artifact has SHA-1
-`8c107a79dfebcf22dc03fd20c778321fa398a112` and integrity
-`sha512-5mwDVkeqMG773h99b+9xPHe7S+zFTAFcK+NWKaruBZpPWpowi+kSpq0nplV0uMfO5BNYXkX+GojG1pZyoPsojw==`.
+Version `0.1.0-alpha.1` remains the only npm release. The Phase 4.8 Git
+realignment is intentionally unpublished; no registry tag or package version
+is changed by this work.
