@@ -1,9 +1,11 @@
 {
   "manifestVersion": 2,
   "name": "system-mfs",
+  "inherit": "installed",
+  "requires": [],
   "phase": "4.8",
   "owner": "@drumee/system-mfs",
-  "packageVersion": "0.1.0-alpha.1",
+  "packageVersion": "0.1.0-alpha.2",
   "schemaVersion": "phase4.8-system-mfs-2",
   "install": [
     { "order": 10, "schemaClass": "yellow-page", "objectType": "table", "objectName": "system_mfs_installation", "path": "schemas/yellow-page/tables/system_mfs_installation.sql" },

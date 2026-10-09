@@ -46,7 +46,7 @@ test("packed system-mfs is standalone, confined and dependency-complete", { time
     "package/lib/index.js",
     "package/lib/store.js",
     "package/lib/projection.js",
-    "package/schemas/SCHEMA_MANIFEST.json",
+    "package/server/schemas/SCHEMA_MANIFEST.json",
     "package/schemas/yellow-page/tables/system_mfs_installation.sql",
     "package/schemas/yellow-page/tables/system_mfs_provisioning.sql",
     "package/schemas/common/tables/media.sql",
@@ -66,11 +66,14 @@ test("packed system-mfs is standalone, confined and dependency-complete", { time
   });
   const installed_root = path.join(consumer, "node_modules", "@drumee", "system-mfs");
   const installed_package = JSON.parse(fs.readFileSync(path.join(installed_root, "package.json"), "utf8"));
-  const manifest = JSON.parse(fs.readFileSync(path.join(installed_root, "schemas", "SCHEMA_MANIFEST.json"), "utf8"));
+  const manifest = JSON.parse(fs.readFileSync(path.join(installed_root, "server", "schemas", "SCHEMA_MANIFEST.json"), "utf8"));
   assert.equal(installed_package.name, "@drumee/system-mfs");
-  assert.equal(installed_package.version, "0.1.0-alpha.1");
+  assert.equal(installed_package.version, "0.1.0-alpha.2");
   assert.equal(manifest.owner, installed_package.name);
   assert.equal(manifest.packageVersion, installed_package.version);
+  assert.equal(manifest.inherit, "installed");
+  assert.deepEqual(manifest.requires, []);
+  assert.equal(fs.existsSync(path.join(installed_root, "schemas", "SCHEMA_MANIFEST.json")), false);
   for (const section of ["install", "provision"]) {
     for (const entry of manifest[section]) {
       assert.equal(path.isAbsolute(entry.path), false);

@@ -15,7 +15,7 @@ function sqlFiles(directory) {
 }
 
 test("every system-mfs SQL source defines exactly one schema object", () => {
-  const manifest = JSON.parse(fs.readFileSync(path.join(root, "schemas/SCHEMA_MANIFEST.json")));
+  const manifest = JSON.parse(fs.readFileSync(path.join(root, "server/schemas/SCHEMA_MANIFEST.json")));
   const entries = manifest.install.concat(manifest.provision);
   const files = sqlFiles(path.join(root, "schemas"));
   assert.equal(files.length, entries.length, "every SQL file must be represented once in the manifest");

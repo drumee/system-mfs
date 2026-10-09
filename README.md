@@ -16,7 +16,12 @@ descriptor, and supports `hub` and `drumate` shards. It never creates an
 class overlays are explicit and currently empty.
 
 Every SQL object has its own source file and its own deterministic manifest
-entry. Shard-local tree operations are procedure-driven. The package owns:
+at `server/schemas/SCHEMA_MANIFEST.json`. This is the only manifest shipped by
+the package; SQL artifacts remain under `schemas/` and their paths are resolved
+from the package root. The manifest declares `inherit: "installed"` and an
+empty `requires` dependency closure because `system-mfs` is the root Hub
+storage contribution. Shard-local tree operations are procedure-driven. The
+package owns:
 
 ```text
 Yellow Pages lifecycle tables:
@@ -63,6 +68,6 @@ requires `executeScript`. Yellow Pages must provide `uniqueId()`, `entity`, and
 
 ## Release status
 
-Version `0.1.0-alpha.1` remains the only npm release. The Phase 4.8 Git
-realignment is intentionally unpublished; no registry tag or package version
-is changed by this work.
+Version `0.1.0-alpha.1` remains the only npm release. Version
+`0.1.0-alpha.2` is prepared locally for Phase 4.9 integration and is not
+published by this work.

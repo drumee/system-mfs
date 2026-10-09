@@ -7,7 +7,8 @@
   responsibility; browser upload protocols, temporary chunk/session state,
   archive jobs and transfer progress are not.
 - Keep schemas, migrations and provisioning knowledge package-owned under
-  `schemas/` and represented by `schemas/SCHEMA_MANIFEST.json`.
+  `schemas/` and represented by the single canonical manifest
+  `server/schemas/SCHEMA_MANIFEST.json`.
 - Preserve explicit installation and existing-shard provisioning lifecycle state.
 - Do not infer MFS readiness from `entity.db_name`, `entity.home_dir` or
   `entity.home_id`.

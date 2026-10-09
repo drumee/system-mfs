@@ -52,7 +52,7 @@ test("installation is explicit, repeatable and module-relative", async () => {
   const mutations = store.mutations;
   assert.equal((await install({ store })).changed, false);
   assert.equal(store.mutations, mutations);
-  const manifest = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../schemas/SCHEMA_MANIFEST.json")));
+  const manifest = JSON.parse(fs.readFileSync(path.resolve(__dirname, "../server/schemas/SCHEMA_MANIFEST.json")));
   assert.ok(manifest.install.concat(manifest.provision).every((entry) => !path.isAbsolute(entry.path) && !entry.path.includes("sources/") && !entry.path.includes("target/")));
 });
 
